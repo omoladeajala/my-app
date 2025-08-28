@@ -1,16 +1,22 @@
 import React from "react";
+import { createRoot } from "react-dom/client";
 import "./index.css";
-import {useState} from "react";
+import { useState } from "react";
 
- export default function interview() {
+export default function Interview() {
   return (
     <div className="interview">
-      <JavaScript questions />
+      <JavaScript questions={questions} />
     </div>
   );
- }
+// ...existing code...
+}
 
- const question = [ {
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Interview />);
+const questions = [
+  {
   No: "1",
   question: "What is a variables?",
   answer: "Variables is a named storage location in memory that can hold a value.",
@@ -42,53 +48,53 @@ import {useState} from "react";
 },
 {
   No: "7",
-  question: "",
-  answer: "", 
+  question: "What does === means?", 
+  answer: "False", 
 },
 {
   No: "8",
-  question: "M",
-  answer: "", 
+  question: "What does != means?",
+  answer: "False", 
 },
 {
   No: "9",
-  question: "M",
-  answer: "", 
+  question: "What does == means?",
+  answer: "True", 
 },
 {
   No: "10",
-  question: "",
-  answer: "", 
+  question: "!==",
+  answer: "True", 
 },
 {
   No: "11",
-  question: "",
-  answer: "", 
+  question: "What does % operator means?",
+  answer: " remainder", 
 },
 {
   No: "12",
-  question: "",
-  answer: "", 
+  question: "100 % 50?",
+  answer: "0", 
 },
 {
   No: "13",
-  question: "",
-  answer: "", 
+  question: "100 % 77?",
+  answer: "23", 
 },
 {
   No: "14",
-  question: "",
-  answer: "", 
+  question: "What is the value of math.PI?",
+  answer: "3.141592653589793", 
 },
 {
   No: "15",
-  question: "",
-  answer: "", 
+  question: "What is Math.min from (3,4,5,6)?",
+  answer: "3", 
 },
 {
   No: "16",
-  question: "",
-  answer: "", 
+  question: "What is Math.max from (3,4,5,6)",
+  answer: "6", 
 },
 {
   No: "17",
@@ -113,10 +119,25 @@ import {useState} from "react";
 ]
 
 function JavaScript() {
+  const [selectedNo, setSelectedNo] = useState(null);
 
-return (
-  <div className="">
+  function handleClick(no) {
+    setSelectedNo(no !== selectedNo ? no : null);
+  }
 
-  </div>
-  )
+  return (
+    <div className="javascript">
+      {questions.map((question) => (
+        <div
+          key={question.No}
+          onClick={() => handleClick(question.No)}
+          className={
+            "card" + (question.No === selectedNo ? " selected" : "")
+          }
+        >
+          <p>{question.No === selectedNo ? question.answer : question.question}</p>
+        </div>
+      ))}
+    </div>
+  );
 }
